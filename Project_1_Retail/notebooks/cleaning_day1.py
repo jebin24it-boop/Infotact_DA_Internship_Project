@@ -72,4 +72,4 @@ print("Missing values:",df.isnull().sum().sum())
 print("Duplicates:",df.duplicated().sum())
 
 df.to_csv('retail_day1.csv',index=False)
-print("Day 1 checkpoint saved as retail_day1.csv!")
+print("Day_1 checkpoint saved as retail_day1.csv!")
