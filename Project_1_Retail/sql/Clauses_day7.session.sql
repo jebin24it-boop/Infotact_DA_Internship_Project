@@ -39,11 +39,11 @@ SELECT CustomerID,COUNT(InvoiceNo) AS Total_Purchase_Sessions FROM Invoices_Reta
 --28.High revenue Product codes : Finding Product codes that have bought in more than $15,000 in gross sales
 SELECT StockCode,ROUND(SUM(TotalPrice),2) AS Gross_Product_Sales FROM Sales_Retaildb GROUP BY StockCode HAVING Gross_Product_Sales > 15000;
 
---29. Heavy Volume Items : Find Product codes where more than 10,000 units have been sold
+--29. Heavy Volume Items : Find Product codes where greater than 10,000 units have been sold
 SELECT StockCode,SUM(Quantity) AS Total_Units_Sold FROM Sales_Retaildb GROUP BY StockCode HAVING Total_Units_Sold > 10000;
 
---30.High Margin Items : Find product codes that maintains a high average of over $50 per transaction line
-SELECT StockCode,ROUND(AVG(UnitPrice),2) AS High_Avg_Price FROM Sales_Retaildb GROUP BY StockCode HAVING High_Avg_Price > 50.00 ORDER BY StockCode DESC;
+-- 30. High Margin Items: Products with avg price above $5
+SELECT StockCode,ROUND(AVG(UnitPrice), 2) AS High_Avg_Price,COUNT(InvoiceNo) AS Times_Sold FROM Sales_Retaildb GROUP BY StockCode HAVING High_Avg_Price > 5.00 ORDER BY High_Avg_Price DESC LIMIT 20;
 
 --31. Massive wholesale orders : Isolate invoices that contain less than or equal to 40 unique products
 SELECT InvoiceNo,COUNT(StockCode) AS Unique_Items_In_Order FROM Sales_Retaildb GROUP BY InvoiceNo HAVING Unique_Items_In_Order < 40 ORDER BY InvoiceNo ASC;
@@ -53,3 +53,33 @@ SELECT InvoiceNo,ROUND(SUM(TotalPrice),2) AS Bulk_Invoice_Total FROM Sales_Retai
 
 --34.Elite Repeat Shoppers: Identify individual customer IDs who have completed more than 50 separate checkout sessions
 SELECT CustomerID,COUNT(InvoiceNo) AS Total_Purchase_Sessions FROM Invoices_Retaildb WHERE CustomerID IS NOT NULL GROUP BY CustomerID HAVING Total_Purchase_Sessions > 50 ORDER BY CustomerID ASC;
+
+--35. Granular Peak Operations: Find the absolute busiest Day and Hour combinations
+SELECT DayName, Hour, COUNT(InvoiceNo) AS Total_Checkout_Sessions FROM Invoices_Retaildb GROUP BY DayName, Hour ORDER BY Total_Checkout_Sessions DESC LIMIT 15;
+
+--36. High-Distribution Catalog Products: Product codes that appear across more than 800 distinct invoices
+SELECT StockCode, COUNT(DISTINCT InvoiceNo) AS Total_Distinct_Invoices FROM Sales_Retaildb GROUP BY StockCode HAVING Total_Distinct_Invoices > 800 ORDER BY Total_Distinct_Invoices DESC;
+
+--37. High-Volume Warehouse Movements: Invoices shifting more than 2,000 total inventory items
+SELECT InvoiceNo, SUM(Quantity) AS Total_Units_Moved FROM Sales_Retaildb GROUP BY InvoiceNo HAVING Total_Units_Moved > 2000 ORDER BY Total_Units_Moved DESC;
+
+--38. Product Pricing Consistency Audit: Monitor item unit price fluctuations across orders
+SELECT StockCode, ROUND(MAX(UnitPrice), 2) AS Max_Price, ROUND(MIN(UnitPrice), 2) AS Min_Price, ROUND(MAX(UnitPrice) - MIN(UnitPrice), 2) AS Price_Fluctuation FROM Sales_Retaildb GROUP BY StockCode HAVING Price_Fluctuation > 0.00 ORDER BY Price_Fluctuation DESC LIMIT 15;
+
+--39. High-Density International Customer Hubs: Countries containing more than 50 unique active buyer IDs
+SELECT Country, COUNT(DISTINCT CustomerID) AS Total_Unique_Customers FROM Invoices_Retaildb WHERE CustomerID IS NOT NULL GROUP BY Country HAVING Total_Unique_Customers > 50 ORDER BY Total_Unique_Customers DESC;
+
+-- 40. High-Ticket Orders: Invoices where avg item price exceeds $4
+SELECT InvoiceNo,ROUND(AVG(UnitPrice), 2) AS Avg_Item_Value,COUNT(StockCode) AS Items_In_Order FROM Sales_Retaildb GROUP BY InvoiceNo HAVING Avg_Item_Value > 4.00 ORDER BY Avg_Item_Value DESC LIMIT 20;
+
+--41. Low-Velocity Underperforming Inventory Lines: Products sold fewer than 5 times in total
+SELECT StockCode, SUM(Quantity) AS Total_Units_Sold FROM Sales_Retaildb GROUP BY StockCode HAVING Total_Units_Sold < 5 ORDER BY Total_Units_Sold ASC;
+
+--42. High-Value Basket Invoices: Orders where the average line-item revenue contribution exceeds $150
+SELECT InvoiceNo, ROUND(AVG(TotalPrice), 2) AS Avg_Line_Revenue FROM Sales_Retaildb GROUP BY InvoiceNo HAVING Avg_Line_Revenue > 150.00 ORDER BY Avg_Line_Revenue DESC;
+
+--43. Concentrated Consumer Markets: Countries where active buyers make an average of more than 15 separate orders
+SELECT Country, COUNT(InvoiceNo) / COUNT(DISTINCT CustomerID) AS Orders_Per_Customer FROM Invoices_Retaildb WHERE CustomerID IS NOT NULL GROUP BY Country HAVING Orders_Per_Customer > 15 ORDER BY Orders_Per_Customer DESC;
+
+-- 44.Check what AVG prices actually look like per product
+SELECT StockCode,ROUND(AVG(UnitPrice), 2) AS Avg_Price FROM Sales_Retaildb GROUP BY StockCode ORDER BY Avg_Price DESC LIMIT 20;

@@ -54,4 +54,7 @@ SELECT * FROM Sales_Retaildb WHERE TotalPrice > 100;
 SELECT * FROM Sales_Retaildb WHERE UnitPrice < 2;
 
 --15.Calculate total revenue and average unit price
-SELECT ROUND(SUM(TotalPrice),2) AS Total_Retail_Revenue,ROUND(AVG(UnitPrice),2) AS Avg_Unit_Price,SUM(Quantity) AS Total_Items_Sold FROM Sales_Retail_db;
+SELECT ROUND(SUM(TotalPrice),2) AS Total_Retail_Revenue,ROUND(AVG(UnitPrice),2) AS Avg_Unit_Price,SUM(Quantity) AS Total_Items_Sold FROM Sales_Retaildb;
+
+-- Check actual price distribution
+SELECT ROUND(MIN(UnitPrice), 2) AS min_price,ROUND(MAX(UnitPrice), 2) AS max_price,ROUND(AVG(UnitPrice), 2) AS avg_price FROM Sales_Retaildb;
