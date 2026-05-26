@@ -58,3 +58,32 @@ SELECT ROUND(SUM(TotalPrice),2) AS Total_Retail_Revenue,ROUND(AVG(UnitPrice),2) 
 
 -- Check actual price distribution
 SELECT ROUND(MIN(UnitPrice), 2) AS min_price,ROUND(MAX(UnitPrice), 2) AS max_price,ROUND(AVG(UnitPrice), 2) AS avg_price FROM Sales_Retaildb;
+
+--Additional Queries
+-- Find all product descriptions that contain the word 'JUMBO'
+SELECT Description FROM Products_Retaildb WHERE Description LIKE '%JUMBO%';
+
+-- Count the total number of unique customers in the invoices table
+SELECT COUNT(DISTINCT CustomerID) AS Total_Customers FROM Invoices_Retaildb;
+
+-- Count the total number of unique products sold in the sales table
+SELECT COUNT(DISTINCT StockCode) AS Total_Products FROM Sales_Retaildb;
+
+-- Calculate the average unit price across all sales records
+SELECT AVG(UnitPrice) AS Average_Unit_Price FROM Sales_Retaildb;
+
+-- Calculate the total sum of unit prices (aliased as Total_Revenue)
+SELECT SUM(UnitPrice) AS Total_Revenue FROM Sales_Retaildb;
+
+-- Retrieve sales details where the quantity purchased is greater than 20
+SELECT Quantity,UnitPrice,TotalPrice FROM Sales_Retaildb WHERE Quantity > 20;
+
+-- Filter invoice details for orders originating from Lithuania, Portugal, or Spain
+SELECT Country,Year,Month FROM Invoices_Retaildb WHERE Country IN('LITHUANIA','PORTUGAL','SPAIN');
+
+-- Filter invoice details specifically for orders placed in France on a Monday
+SELECT Country,DayName FROM Invoices_Retaildb WHERE DayName IN ('Monday') AND Country IN('FRANCE');
+
+-- Retrieve quantity and total price for transactions where the quantity is greater than 20
+SELECT Quantity,TotalPrice FROM Sales_Retaildb WHERE Quantity > 20;
+
