@@ -221,3 +221,26 @@ FROM Sales_Retaildb S
 INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
 WHERE I.CustomerID IS NOT NULL
 LIMIT 30;
+
+-- 81. Use DENSE_RANK() to find and rank the top 10 best-selling products by total quantity sold
+SELECT S.StockCode, P.Description, SUM(S.Quantity) AS Total_Units_Moved,
+       DENSE_RANK() OVER (ORDER BY SUM(S.Quantity) DESC) AS Sales_Velocity_Rank
+FROM Sales_Retaildb S
+INNER JOIN Products_Retaildb P ON S.StockCode = P.StockCode
+GROUP BY S.StockCode, P.Description
+LIMIT 10;
+
+-- 82. Use a Window Function to calculate a running total of items sold chronologically across invoices
+SELECT S.InvoiceNo, I.InvoiceDate, S.Quantity,
+       SUM(S.Quantity) OVER (ORDER BY I.InvoiceDate ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS Running_Total_Units
+FROM Sales_Retaildb S
+INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+LIMIT 30;
+
+-- 83. Use a CASE statement to segment orders into seasonal shopping blocks based on the invoice month
+SELECT I.InvoiceNo, I.Month,
+       CASE WHEN I.Month IN (11, 12, 1) THEN 'Holiday Peak'
+            WHEN I.Month IN (6, 7, 8) THEN 'Summer Surge'
+            ELSE 'Standard Off-Peak' END AS Seasonal_Segment
+FROM Invoices_Retaildb I
+LIMIT 30;
