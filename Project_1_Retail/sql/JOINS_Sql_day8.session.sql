@@ -211,3 +211,13 @@ WHERE P.Description LIKE '%BAG%'
 GROUP BY I.Year, I.Month
 ORDER BY I.Year, I.Month;
        
+
+--Advanced Queries
+
+-- 80. Use a Window Function (ROW_NUMBER) to number each customer's orders chronologically 
+SELECT I.CustomerID, I.InvoiceDate, S.InvoiceNo, S.TotalPrice,
+       ROW_NUMBER() OVER (PARTITION BY I.CustomerID ORDER BY I.InvoiceDate ASC) AS Customer_Order_Sequence
+FROM Sales_Retaildb S
+INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+WHERE I.CustomerID IS NOT NULL
+LIMIT 30;
