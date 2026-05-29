@@ -184,7 +184,7 @@ SELECT I.InvoiceDate,I.Country,MIN(S.Quantity) AS MIN_Quantity,MAX(S.Quantity) A
        P.Description FROM Invoices_Retaildb I INNER JOIN Sales_Retaildb S ON I.InvoiceNo=S.InvoiceNo
        INNER JOIN  Products_Retaildb P ON S.StockCode=P.StockCode
        GROUP BY I.Country;
---WEEK 2 - 3
+--WEEK - 3
 -- 72. Identify the top 10 best-selling product descriptions specifically for customers in Germany
 SELECT P.Description, SUM(S.Quantity) AS Total_German_Sales
 FROM Sales_Retaildb S
@@ -265,3 +265,15 @@ FROM (
     ON S.InvoiceNo = I.InvoiceNo
     GROUP BY I.Country
 );
+
+-- 85. Use a Common Table Expression (CTE) to calculate daily sales totals and filter for days with revenue above a certain threshold
+WITH DailySales AS (
+    SELECT I.InvoiceDate, SUM(S.TotalPrice) AS Daily_Total
+    FROM Sales_Retaildb S
+    INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+    GROUP BY I.InvoiceDate
+)
+SELECT InvoiceDate, ROUND(Daily_Total, 2) AS Daily_Total 
+FROM DailySales 
+WHERE Daily_Total > 3000
+ORDER BY Daily_Total DESC;
