@@ -59,7 +59,7 @@ SELECT ROUND(SUM(TotalPrice),2) AS Total_Retail_Revenue,ROUND(AVG(UnitPrice),2) 
 -- Check actual price distribution
 SELECT ROUND(MIN(UnitPrice), 2) AS min_price,ROUND(MAX(UnitPrice), 2) AS max_price,ROUND(AVG(UnitPrice), 2) AS avg_price FROM Sales_Retaildb;
 
---Additional Queries
+--Additional Queries -- WEEK 2-3
 -- Find all product descriptions that contain the word 'JUMBO'
 SELECT Description FROM Products_Retaildb WHERE Description LIKE '%JUMBO%';
 

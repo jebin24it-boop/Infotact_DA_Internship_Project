@@ -184,7 +184,7 @@ SELECT I.InvoiceDate,I.Country,MIN(S.Quantity) AS MIN_Quantity,MAX(S.Quantity) A
        P.Description FROM Invoices_Retaildb I INNER JOIN Sales_Retaildb S ON I.InvoiceNo=S.InvoiceNo
        INNER JOIN  Products_Retaildb P ON S.StockCode=P.StockCode
        GROUP BY I.Country;
-
+--WEEK 2 - 3
 -- 72. Identify the top 10 best-selling product descriptions specifically for customers in Germany
 SELECT P.Description, SUM(S.Quantity) AS Total_German_Sales
 FROM Sales_Retaildb S
@@ -230,12 +230,16 @@ INNER JOIN Products_Retaildb P ON S.StockCode = P.StockCode
 GROUP BY S.StockCode, P.Description
 LIMIT 10;
 
--- 82. Use a Window Function to calculate a running total of items sold chronologically across invoices
-SELECT S.InvoiceNo, I.InvoiceDate, S.Quantity,
-       SUM(S.Quantity) OVER (ORDER BY I.InvoiceDate ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS Running_Total_Units
-FROM Sales_Retaildb S
-INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
-LIMIT 30;
+-- 82. Use a subquery to find products with an average quantity sold above the overall average quantity across all products
+SELECT StockCode,
+       ROUND(AVG(Quantity),2) AS Avg_Quantity_Sold
+FROM Sales_Retaildb
+GROUP BY StockCode
+HAVING Avg_Quantity_Sold >
+(
+    SELECT AVG(Quantity)
+    FROM Sales_Retaildb
+);
 
 -- 83. Use a CASE statement to segment orders into seasonal shopping blocks based on the invoice month
 SELECT I.InvoiceNo, I.Month,
@@ -244,3 +248,20 @@ SELECT I.InvoiceNo, I.Month,
             ELSE 'Standard Off-Peak' END AS Seasonal_Segment
 FROM Invoices_Retaildb I
 LIMIT 30;
+
+-- 84. Calculate the percentage contribution of each country's revenue to the total revenue using a subquery
+SELECT Country,
+       Revenue,
+       ROUND(
+           Revenue * 100.0 /
+           SUM(Revenue) OVER (),
+           2
+       ) AS Revenue_Percentage
+FROM (
+    SELECT I.Country,
+           SUM(S.TotalPrice) AS Revenue
+    FROM Sales_Retaildb S
+    INNER JOIN Invoices_Retaildb I
+    ON S.InvoiceNo = I.InvoiceNo
+    GROUP BY I.Country
+);
