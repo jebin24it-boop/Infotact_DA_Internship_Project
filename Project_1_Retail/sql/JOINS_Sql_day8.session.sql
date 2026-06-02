@@ -266,14 +266,17 @@ FROM (
     GROUP BY I.Country
 );
 
--- 85. Use a Common Table Expression (CTE) to calculate daily sales totals and filter for days with revenue above a certain threshold
+-- 85. Use a Common Table Expression (CTE) to calculate daily sales totals and identify high revenue days
 WITH DailySales AS (
-    SELECT I.InvoiceDate, SUM(S.TotalPrice) AS Daily_Total
+    SELECT I.InvoiceDate,
+           SUM(S.TotalPrice) AS Daily_Total
     FROM Sales_Retaildb S
-    INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+    INNER JOIN Invoices_Retaildb I 
+    ON S.InvoiceNo = I.InvoiceNo
     GROUP BY I.InvoiceDate
 )
-SELECT InvoiceDate, ROUND(Daily_Total, 2) AS Daily_Total 
-FROM DailySales 
+SELECT InvoiceDate,
+       ROUND(Daily_Total, 2) AS Daily_Total
+FROM DailySales
 WHERE Daily_Total > 3000
 ORDER BY Daily_Total DESC;
