@@ -1,46 +1,69 @@
-# Infotact_DA_Internship_Project
+# Infotact Data Analytics Internship Project
 
-## Project 1: Omnichannel Retail Sales Analytics
+## Project Title
+
+# Omnichannel Retail Sales Analytics
 
 ---
 
 ## Team Members
 
-* Jebin Joy *(Team Leader)*
-* Rivya Roy
-* Saurav Gopinath
-* Delphin R
+| Member                      | Role                                                                                                                                                |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Jebin Joy (Team Leader)** | Exploratory Data Analysis (EDA), Data Visualization, Power BI Dashboard Development, Business Insights Generation, Documentation, GitHub Management |
+| **Rivya Roy**               | Data Cleaning & Preprocessing                                                                                                                       |
+| **Saurav Gopinath**         | SQL Analytics & Relational Database Design                                                                                                          |
 
 ---
 
 # Project Overview
 
-This project focuses on analyzing omnichannel retail sales data to generate meaningful business insights using Data Analytics techniques. The project involves data cleaning, preprocessing, SQL-based analytics, relational database design, and Power BI dashboard development for business decision-making.
+The Omnichannel Retail Sales Analytics Project focuses on transforming raw retail transaction data into meaningful business insights through Data Analytics techniques.
+
+The project follows an end-to-end analytics workflow involving data cleaning, preprocessing, exploratory data analysis, relational database design, SQL-based analytics, dashboard development, and business insight generation.
+
+The primary objective is to help businesses understand sales performance, customer behavior, product trends, and revenue patterns to support data-driven decision-making.
 
 ---
 
-# Objectives
+# Project Objectives
 
 * Clean and preprocess raw retail sales data
-* Perform exploratory data analysis (EDA)
+* Perform Exploratory Data Analysis (EDA)
 * Design a normalized relational database
 * Execute SQL-based analytical queries
 * Generate KPI-driven business insights
 * Build interactive Power BI dashboards
 * Apply an end-to-end Data Analytics workflow
+* Support business decision-making through data visualization
 
 ---
 
 # Technologies Used
 
+### Programming & Analysis
+
 * Python
 * Pandas
-* Google Colab
+* NumPy
+* Matplotlib
+* Seaborn
+
+### Database & Querying
+
 * SQLite
 * SQL
+
+### Visualization & Reporting
+
 * Power BI
-* GitHub
+
+### Development Tools
+
+* Google Colab
 * Visual Studio Code (VS Code)
+* Git
+* GitHub
 
 ---
 
@@ -53,6 +76,7 @@ Online Retail Sales and Customer Dataset
 ### Dataset Source
 
 Kaggle Dataset:
+
 https://www.kaggle.com/datasets/thedevastator/online-retail-sales-and-customer-data
 
 ### Dataset Description
@@ -60,214 +84,320 @@ https://www.kaggle.com/datasets/thedevastator/online-retail-sales-and-customer-d
 The dataset contains:
 
 * Customer purchase records
-* Invoice details
-* Product information
-* Quantity and pricing data
-* Country-wise transactions
-* Date and time-based sales records
+* Invoice information
+* Product details
+* Quantity and pricing information
+* Country-wise transaction records
+* Date and time-based sales information
 
-The dataset is used for retail sales analysis and business insight generation.
+The dataset enables comprehensive retail sales analysis and business intelligence reporting.
+
+---
+
+# Project Workflow
+
+```text
+Raw Dataset
+      ↓
+Data Cleaning & Preprocessing
+      ↓
+Exploratory Data Analysis (EDA)
+      ↓
+Database Design & Normalization
+      ↓
+SQL Analytics
+      ↓
+Power BI Dashboard Development
+      ↓
+Business Insights Generation
+      ↓
+Documentation & Reporting
+```
 
 ---
 
 # Project Structure
 
-```plaintext id="b6j6s7"
+```plaintext
 Infotact_DA_Internship_Project/
 │
-├── data/          → Raw and cleaned datasets
-├── notebooks/     → Python notebooks for preprocessing & analysis
-├── sql/           → SQL queries and database scripts
-├── dashboard/     → Power BI dashboard files
-├── reports/       → Internship documentation and reports
+├── data/
+│   ├── raw_data
+│   └── cleaned_data
+│
+├── notebooks/
+│   ├── data_cleaning
+│   ├── exploratory_analysis
+│   └── visualization
+│
+├── sql/
+│   ├── database_scripts
+│   └── sql_queries
+│
+├── dashboard/
+│   ├── Retail_Analytics_Dashboard.pbix
+│   └── assets
+│
+├── reports/
+│   ├── Business_Insights_Report.docx
+│   ├── Final_Project_Report.docx
+│   └── individual_reports
+│
 └── README.md
 ```
 
 ---
 
-# Week 1 Progress – Data Cleaning & Preprocessing
+# Phase 1: Data Cleaning & Preprocessing
 
-## Tasks Completed
+### Activities Performed
 
-* Explored the online retail dataset using Pandas
-* Checked dataset shape, columns, datatypes, and summary statistics
-* Identified missing values and duplicate records
-* Handled missing values in Description and CustomerID columns
-* Removed duplicate rows from the dataset
-* Converted InvoiceDate into datetime format
-* Converted CustomerID into appropriate datatype
-* Identified and removed cancelled transactions
-* Removed invalid quantity and UnitPrice values
-* Standardized text formatting in Description and Country columns
-* Removed extra spaces and converted text values to uppercase
-* Detected and removed outliers using the IQR method
-* Created additional useful columns:
+* Dataset exploration
+* Missing value identification and handling
+* Duplicate record removal
+* Datatype conversion
+* Invoice date transformation
+* Customer ID standardization
+* Cancelled transaction removal
+* Invalid quantity and price removal
+* Text standardization
+* Outlier detection using IQR
+* Feature engineering
 
-  * TotalPrice
-  * Year
-  * Month
-  * Day
-  * DayName
-  * Hour
-* Generated final cleaned dataset summary
-* Maintained GitHub version control using commits and push operations
+### New Features Created
 
----
+* TotalPrice
+* Year
+* Month
+* Day
+* DayName
+* Hour
 
-# Data Cleaning Techniques Used
+### Techniques Applied
 
 * Missing Value Handling
 * Duplicate Removal
 * Datatype Conversion
-* Outlier Detection (IQR Method)
+* Outlier Detection
 * Feature Engineering
 * Text Standardization
 
 ---
 
-# Week 2 Progress – SQL & Relational Database Design
+# Phase 2: Exploratory Data Analysis (EDA)
 
-## Tasks Completed
+### Analysis Performed
 
-* Imported cleaned retail dataset into SQLite database using Python and sqlite3
-* Configured SQL environment using SQLTools extension in VS Code
-* Created retail database and imported cleaned CSV dataset
-* Performed exploratory SQL queries
-* Used SQL aggregate functions including:
+* Revenue trend analysis
+* Monthly sales analysis
+* Customer behavior analysis
+* Product performance analysis
+* Country-wise revenue analysis
+* Weekday sales analysis
+* Shopping hour analysis
+* Revenue distribution analysis
 
-  * `COUNT()`
-  * `SUM()`
-  * `AVG()`
-  * `MIN()`
-  * `MAX()`
-  * `DISTINCT()`
+### Key Findings
 
----
-
-# Database Normalization
-
-The flat retail dataset was normalized into 3 relational tables for improved database structure and query efficiency.
-
-## 1. Products_Retaildb
-
-| Column Name               |
-| ------------------------- |
-| StockCode *(Primary Key)* |
-| Description               |
+* Revenue increased steadily throughout the year.
+* Month 11 generated the highest revenue.
+* The United Kingdom dominated overall sales.
+* A small number of customers contributed significantly to total revenue.
+* Peak shopping activity occurred during midday hours.
 
 ---
 
-## 2. Invoices_Retaildb
+# Phase 3: Relational Database Design
 
-| Column Name               |
-| ------------------------- |
-| InvoiceNo *(Primary Key)* |
-| InvoiceDate               |
-| CustomerID                |
-| Country                   |
-| Year                      |
-| Month                     |
-| Day                       |
-| DayName                   |
-| Hour                      |
+The retail dataset was normalized into relational tables to improve structure, maintainability, and query performance.
+
+### Products_Retaildb
+
+* StockCode (Primary Key)
+* Description
+
+### Invoices_Retaildb
+
+* InvoiceNo (Primary Key)
+* InvoiceDate
+* CustomerID
+* Country
+* Year
+* Month
+* Day
+* DayName
+* Hour
+
+### Sales_Retaildb
+
+* SaleID (Primary Key)
+* InvoiceNo (Foreign Key)
+* StockCode (Foreign Key)
+* Quantity
+* UnitPrice
+* TotalPrice
 
 ---
 
-## 3. Sales_Retaildb
+# Phase 4: SQL Analytics
 
-| Column Name               |
-| ------------------------- |
-| SaleID *(Primary Key)*    |
-| InvoiceNo *(Foreign Key)* |
-| StockCode *(Foreign Key)* |
-| Quantity                  |
-| UnitPrice                 |
-| TotalPrice                |
+### SQL Operations Performed
 
----
-
-# SQL Querying & Analytics
-
-Performed SQL analysis using:
-
-* `SELECT`
-* `WHERE`
-* `GROUP BY`
-* `ORDER BY`
-* `HAVING`
+* SELECT
+* WHERE
+* GROUP BY
+* ORDER BY
+* HAVING
+* INNER JOIN
 * Aggregate Functions
 
-### Business Insights Generated
+### Aggregate Functions Used
 
-* Revenue analysis
-* Product performance analysis
-* Country-wise sales analysis
-* Customer purchasing behavior
-* Peak operational hour analysis
-* Monthly revenue trends
-* Daily sales trends
+* COUNT()
+* SUM()
+* AVG()
+* MIN()
+* MAX()
+* DISTINCT()
 
----
+### Business Analysis Conducted
 
-# JOIN Operations
-
-Implemented `INNER JOIN` operations across:
-
-* `Sales_Retaildb`
-* `Invoices_Retaildb`
-* `Products_Retaildb`
-
-Combined transactional, customer, and product datasets to generate analytical business reports and KPI insights.
-
----
-
-# Power BI Dashboard(Planned)
-
-## Dashboard Features
-
-* KPI Cards
-* Revenue Trend Analysis
-* Country-wise Sales Visualization
+* Revenue Analysis
 * Product Performance Analysis
-* Customer Insights
-* Time-based Analysis
-* Interactive Filters & Slicers
+* Country-wise Sales Analysis
+* Customer Analysis
+* Monthly Trend Analysis
+* Daily Trend Analysis
+* Peak Hour Analysis
 
 ---
 
-# Key Skills Applied
+# Phase 5: Power BI Dashboard
+
+## KPI Cards
+
+* Total Revenue
+* Total Transactions
+* Total Customers
+* Total Products
+
+## Dashboard Visualizations
+
+1. Monthly Revenue Trend
+2. Monthly Transactions
+3. Top 10 Products by Revenue
+4. Top 10 Countries by Revenue
+5. Revenue by Weekday
+6. Peak Shopping Hours
+7. Revenue Share by Top 5 Countries
+8. Top Customers by Revenue
+
+## Interactive Features
+
+* Country Slicer
+* Month Slicer
+* Dynamic KPI Updates
+* Cross-Filtering Across Visuals
+
+---
+
+# Key Business Insights
+
+### Revenue Insights
+
+* Revenue demonstrated consistent growth throughout the year.
+* Month 11 generated the highest overall revenue.
+
+### Customer Insights
+
+* Customer ID 14911 generated the highest revenue.
+* A small customer segment contributed a significant portion of total sales.
+
+### Product Insights
+
+* The highest-performing product generated approximately £35K revenue.
+* Product sales were concentrated among a limited group of products.
+
+### Geographic Insights
+
+* The United Kingdom generated the majority of overall revenue.
+* Revenue from the UK significantly exceeded other countries.
+
+### Time-Based Insights
+
+* Thursday generated the highest weekday revenue.
+* Sunday generated comparatively lower revenue.
+* Customer activity peaked during midday shopping hours.
+
+---
+
+# Business Recommendations
+
+* Strengthen customer retention initiatives.
+* Promote top-performing products through targeted campaigns.
+* Focus marketing efforts during peak shopping hours.
+* Expand sales strategies to additional international markets.
+* Reduce dependence on a single geographic market.
+* Utilize seasonal marketing campaigns before peak sales periods.
+
+---
+
+# Dashboard Preview
+
+Dashboard screenshots are available in the repository under:
+
+```text
+dashboard/assets/
+```
+
+The dashboard provides an interactive view of:
+
+* Revenue Performance
+* Customer Behavior
+* Product Analytics
+* Country-wise Analysis
+* Time-based Trends
+* Business KPIs
+
+---
+
+# Project Outcomes
+
+The project successfully transformed raw retail transaction data into actionable business intelligence through:
 
 * Data Cleaning
-* Data Preprocessing
-* Exploratory Data Analysis (EDA)
-* SQL Querying
-* Database Normalization
-* Data Visualization
-* Business Analytics
-* Dashboard Development
-* GitHub Version Control
+* Exploratory Data Analysis
+* SQL Analytics
+* Database Design
+* Power BI Dashboarding
+* Business Insight Generation
+
+The final solution enables efficient monitoring of retail performance and supports data-driven decision-making.
 
 ---
 
-# Current Project Status
+# Project Status
 
-The project is currently in progress. Initial stages including data cleaning, preprocessing, SQL analytics, and relational database design have been completed successfully.
+✅ Data Cleaning & Preprocessing Completed
 
-The next phase involves:
+✅ Exploratory Data Analysis Completed
 
-* Advanced Power BI dashboard development
-* KPI visualization
-* Business insight generation
-* Dashboard optimization and interactivity
+✅ Relational Database Design Completed
+
+✅ SQL Analytics Completed
+
+✅ Power BI Dashboard Completed
+
+✅ Business Insights Generated
+
+✅ Documentation Completed
+
+✅ GitHub Version Control Maintained
+
+### Status: Project Successfully Completed
 
 ---
 
-# Upcoming Work
+# Acknowledgement
 
-* Complete Power BI dashboard development
-* Add advanced KPI visualizations
-* Perform deeper business insight analysis
-* Improve dashboard interactivity
-* Finalize internship documentation
-
----
+This project was completed as part of the Data Analytics Internship Program at Infotact Solutions and demonstrates the practical application of data analytics, business intelligence, and visualization techniques in solving real-world retail business problems.
