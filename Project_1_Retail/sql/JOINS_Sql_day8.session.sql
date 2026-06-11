@@ -184,3 +184,99 @@ SELECT I.InvoiceDate,I.Country,MIN(S.Quantity) AS MIN_Quantity,MAX(S.Quantity) A
        P.Description FROM Invoices_Retaildb I INNER JOIN Sales_Retaildb S ON I.InvoiceNo=S.InvoiceNo
        INNER JOIN  Products_Retaildb P ON S.StockCode=P.StockCode
        GROUP BY I.Country;
+--WEEK - 3
+-- 72. Identify the top 10 best-selling product descriptions specifically for customers in Germany
+SELECT P.Description, SUM(S.Quantity) AS Total_German_Sales
+FROM Sales_Retaildb S
+INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+INNER JOIN Products_Retaildb P ON S.StockCode = P.StockCode
+WHERE I.Country = 'GERMANY'
+GROUP BY P.Description
+ORDER BY Total_German_Sales DESC LIMIT 10;
+
+-- 73. Count the total number of unique product types purchased by each individual customer
+SELECT I.CustomerID, COUNT(DISTINCT S.StockCode) AS Unique_Products_Bought
+FROM Sales_Retaildb S
+INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+WHERE I.CustomerID IS NOT NULL
+GROUP BY I.CustomerID
+ORDER BY Unique_Products_Bought DESC LIMIT 20;
+
+-- 74. Track the monthly revenue generated specifically by items containing the keyword 'BAG'
+SELECT I.Year, I.Month, ROUND(SUM(S.TotalPrice), 2) AS Bag_Revenue
+FROM Sales_Retaildb S
+INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+INNER JOIN Products_Retaildb P ON S.StockCode = P.StockCode
+WHERE P.Description LIKE '%BAG%'
+GROUP BY I.Year, I.Month
+ORDER BY I.Year, I.Month;
+       
+
+--Advanced Queries
+
+-- 80. Use a Window Function (ROW_NUMBER) to number each customer's orders chronologically 
+SELECT I.CustomerID, I.InvoiceDate, S.InvoiceNo, S.TotalPrice,
+       ROW_NUMBER() OVER (PARTITION BY I.CustomerID ORDER BY I.InvoiceDate ASC) AS Customer_Order_Sequence
+FROM Sales_Retaildb S
+INNER JOIN Invoices_Retaildb I ON S.InvoiceNo = I.InvoiceNo
+WHERE I.CustomerID IS NOT NULL
+LIMIT 30;
+
+-- 81. Use DENSE_RANK() to find and rank the top 10 best-selling products by total quantity sold
+SELECT S.StockCode, P.Description, SUM(S.Quantity) AS Total_Units_Moved,
+       DENSE_RANK() OVER (ORDER BY SUM(S.Quantity) DESC) AS Sales_Velocity_Rank
+FROM Sales_Retaildb S
+INNER JOIN Products_Retaildb P ON S.StockCode = P.StockCode
+GROUP BY S.StockCode, P.Description
+LIMIT 10;
+
+-- 82. Use a subquery to find products with an average quantity sold above the overall average quantity across all products
+SELECT StockCode,
+       ROUND(AVG(Quantity),2) AS Avg_Quantity_Sold
+FROM Sales_Retaildb
+GROUP BY StockCode
+HAVING Avg_Quantity_Sold >
+(
+    SELECT AVG(Quantity)
+    FROM Sales_Retaildb
+);
+
+-- 83. Use a CASE statement to segment orders into seasonal shopping blocks based on the invoice month
+SELECT I.InvoiceNo, I.Month,
+       CASE WHEN I.Month IN (11, 12, 1) THEN 'Holiday Peak'
+            WHEN I.Month IN (6, 7, 8) THEN 'Summer Surge'
+            ELSE 'Standard Off-Peak' END AS Seasonal_Segment
+FROM Invoices_Retaildb I
+LIMIT 30;
+
+-- 84. Calculate the percentage contribution of each country's revenue to the total revenue using a subquery
+SELECT Country,
+       Revenue,
+       ROUND(
+           Revenue * 100.0 /
+           SUM(Revenue) OVER (),
+           2
+       ) AS Revenue_Percentage
+FROM (
+    SELECT I.Country,
+           SUM(S.TotalPrice) AS Revenue
+    FROM Sales_Retaildb S
+    INNER JOIN Invoices_Retaildb I
+    ON S.InvoiceNo = I.InvoiceNo
+    GROUP BY I.Country
+);
+
+-- 85. Use a Common Table Expression (CTE) to calculate daily sales totals and identify high revenue days
+WITH DailySales AS (
+    SELECT I.InvoiceDate,
+           SUM(S.TotalPrice) AS Daily_Total
+    FROM Sales_Retaildb S
+    INNER JOIN Invoices_Retaildb I 
+    ON S.InvoiceNo = I.InvoiceNo
+    GROUP BY I.InvoiceDate
+)
+SELECT InvoiceDate,
+       ROUND(Daily_Total, 2) AS Daily_Total
+FROM DailySales
+WHERE Daily_Total > 3000
+ORDER BY Daily_Total DESC;
